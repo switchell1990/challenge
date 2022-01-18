@@ -1,0 +1,33 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+djangorestframework = "*"
+django-environ = "*"
+psycopg2-binary = "*"
+django = "==3.2"
+isort = "*"
+black = "*"
+sort-requirements = "*"
+drf-nested-routers = "==0.93.4"
+coreapi = "*"
+mypy = "*"
+faker = "*"
+django-filter = "*"
+pytest-django = "*"
+install = "*"
+pytest-cov = "*"
+pytest-lazy-fixture = "*"
+autoflake = "*"
+django-extensions = "*"
+pygraphviz = "*"
+pyparsing = "*"
+pydot = "*"
+pytest-xdist = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
