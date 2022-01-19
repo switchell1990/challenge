@@ -1,10 +1,4 @@
-from typing import Dict, Tuple, Type
-
-from rest_framework import status
-from rest_framework.permissions import AllowAny
-from rest_framework.request import Request
-from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from typing import Type
 
 from core.filters import SchoolFilter, StudentFilter, StudentNestedFilter
 from core.models import School, Student
@@ -14,19 +8,10 @@ from core.serializers import (
     StudentSerializer,
 )
 from utils.pagination import LargeSizePagination, StandardSizePagination
+from utils.views import BaseModel
 
 
-class BaseSerializer(ModelViewSet):
-    permission_classes: Tuple = (AllowAny,)
-
-    def destroy(self, request: Request, *args: Tuple, **kwargs: Dict) -> Response:
-        instance: School = self.get_object()
-        instance.is_active = False
-        instance.save()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class SchoolViewSet(BaseSerializer):
+class SchoolViewSet(BaseModel):
     """
     list:
     Return a list of active existing schools.
@@ -53,7 +38,7 @@ class SchoolViewSet(BaseSerializer):
     pagination_class: Type[StandardSizePagination] = StandardSizePagination
 
 
-class StudentViewSet(BaseSerializer):
+class StudentViewSet(BaseModel):
     """
     list:
     Return a list of active existing students.
@@ -80,7 +65,7 @@ class StudentViewSet(BaseSerializer):
     pagination_class: Type[LargeSizePagination] = LargeSizePagination
 
 
-class StudentNestedViewSet(BaseSerializer):
+class StudentNestedViewSet(BaseModel):
     """
     list:
     Return a list of active existing schools with active students.
