@@ -1,6 +1,6 @@
 # API School & Students
 
-API for view school and students
+API for view schools and students
 
 ## Prerequisites
 
@@ -15,6 +15,42 @@ API for view school and students
 - Django Rest Framework 3.13.1
 - Pytest
 
+## Models
+
+<p align="center">
+  <img width="380" src="Model Design.png">
+</p>
+
+## Endpoints
+
+- api/v1/students/ (GET, POST)
+- api/v1//schools/ (GET, POST)
+- api/v1/schools/:id (GET, PUT, PATCH, DELETE)
+- api/v1/students/:id (GET, PUT, PATCH, DELETE)
+- api/v1//schools/:id/students (GET, POST)
+- api/v1/schools/:id/students/:id (GET, PUT, PATCH, DELETE)
+
+
+## INSTALLING
+
+- Clone the project into a directory you've created on your machine
+
+```sh
+git clone https://github.com/switchell1990/manatal.git
+```
+
+- To get into the project directory from your terminal
+
+```sh
+cd manatal
+```
+
+- Open project into your editior (VS CODE)
+
+```sh
+code .
+```
+
 ## ENVIRONMENT VARIABLES
 
 - Create a file in the root and call it .env
@@ -23,7 +59,8 @@ API for view school and students
 ```sh
 
 ALLOWED_HOSTS=*
-DATABASE_URL=set_me
+DATABASE_URL=postgres://postgres:postgres@postgres:5432/school_api (for docker)
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/school_api (for local)
 POSTGRES_PASSWORD=postgres
 POSTGRES_DB=school_api
 DEBUG=True
@@ -31,15 +68,20 @@ SECRET_KEY=set_me
 
 ```
 
+
 ## GETTING STARTED
 
-- Run Docker-Compose (Postgres)
+Once your project is up and running,you can access it from your access the api by going to - <http://localhost:8000/api/>
+
+## Run with Docker
+
+- Open a command terminal and run Docker-Compose (Postgres)
 
 ```sh
 docker-compose up -d postgres
 ```
 
-- Run Docker-Compose (Django) - This will also do your create migrations and migrations.
+- Open a new terminal and Run Docker-Compose (Django) - This will also do your create migrations and migrations.
 
 ```sh
 docker-compose up -d django
@@ -57,20 +99,47 @@ docker-compose exec django ./manage.py createdata
 docker-compose exec django pytest
 ```
 
-## Models
+## Run with Pipenv
 
-<p align="center">
-  <img width="380" src="Model Design.png">
-</p>
+- Create a database with the following commands (reuqires postgres installed on local machine)
 
-## Endpoints
+```sh
+psql -U postgres
+```
 
-- api/v1/students/ (GET, POST)
-- api/v1//schools/ (GET, POST)
-- api/v1/schools/:id (GET, PUT, PATCH, DELETE)
-- api/v1/students/:id (GET, PUT, PATCH, DELETE)
-- api/v1//schools/:id/students (GET, POST)
-- api/v1/schools/:id/students/:id (GET, PUT, PATCH, DELETE)
+```sh
+create database school_api;
+```
+
+- Create environemnt and install dependencies
+
+```sh
+pipenv install -r dependencies/requirements-dev.txt
+```
+
+- Activate the virtual enviornment
+
+```sh
+pipenv shell
+```
+
+- Migrate the migrations.
+
+```sh
+./manage.py migrate
+```
+
+-Run tests
+
+```sh
+pytest
+```
+
+- Run the server
+
+```sh
+./manage.py runserver
+```
 
 ## API Documentation
 
@@ -88,8 +157,6 @@ docker-compose exec django pytest
 
 - Time spent - 3 hours (including setting up tests)
 
-## LEFT TO DO
+## Further comments
 
-- Review one more time and then submit to recruiter!
-
-<!-- pipenv lock -r > requirements.txt -->
+I have decided to change how delete works, instead of deleting the record I have opted to change the is_active flag to false so the records can be kept in the database for a period of time. 

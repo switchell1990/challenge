@@ -46,6 +46,7 @@ class SchoolViewSet(BaseSerializer):
     delete:
     Delete an instance of a school.
     """
+
     queryset: School = School.objects.filter(is_active=True).order_by("-created_at")
     serializer_class: Type[SchoolSerializer] = SchoolSerializer
     filterset_class: Type[SchoolFilter] = SchoolFilter
@@ -72,6 +73,7 @@ class StudentViewSet(BaseSerializer):
     delete:
     Delete an instance of a student
     """
+
     queryset: Student = Student.objects.filter(is_active=True).order_by("-created_at")
     serializer_class: Type[StudentSerializer] = StudentSerializer
     filterset_class: Type[StudentFilter] = StudentFilter
@@ -98,6 +100,7 @@ class StudentNestedViewSet(BaseSerializer):
     delete:
     Delete an instance of a student
     """
+
     queryset: Student = Student.objects.filter(is_active=True).order_by("-created_at")
     serializer_class: Type[StudentNestedSerializer] = StudentNestedSerializer
     filterset_class: Type[StudentNestedFilter] = StudentNestedFilter

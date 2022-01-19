@@ -1,3 +1,5 @@
+import logging
+from logging import Logger
 from typing import Dict, Tuple, Type, Union
 
 from rest_framework.serializers import (
@@ -8,6 +10,8 @@ from rest_framework.serializers import (
 
 from core.models import School, Student
 from services.core_services import age_validation_check, is_max_student_count
+
+logger: Logger = logging.getLogger(__name__)
 
 
 class SchoolSerializer(ModelSerializer):
@@ -34,11 +38,15 @@ class StudentSerializer(ModelSerializer):
 
     def create(self, validated_data: Dict) -> Union[Student, ValidationError]:
         if age_validation_check(validated_data["age"]):
+            logger.error(
+                "Unable to create student due to them not being in the age range of 10 to 20!"
+            )
             raise ValidationError(
                 "Students need to be age between 10 to 20 to register!"
             )
 
         if is_max_student_count(validated_data["school"]):
+            logger.error("Unable to add student due to the school being full!")
             raise ValidationError("Unable to add student to school as it is full!")
 
         return super().create(validated_data)
@@ -69,6 +77,9 @@ class StudentNestedSerializer(ModelSerializer):
         validated_data["school"] = school_object
 
         if age_validation_check(validated_data["age"]):
+            logger.error(
+                "Unable to create student due to them not being in the age range of 10 to 20!"
+            )
             raise ValidationError(
                 "Students need to be age between 10 to 20 to register!"
             )
