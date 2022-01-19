@@ -1,5 +1,4 @@
 import uuid
-from ast import DictComp
 from typing import Dict
 
 from django.db import models
