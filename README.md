@@ -36,7 +36,7 @@ API for view schools and students
 - Clone the project into a directory you've created on your machine
 
 ```sh
-git clone https://github.com/switchell1990/manatal.git
+git clone https://github.com/switchell1990/challenge.git
 ```
 
 - To get into the project directory from your terminal
